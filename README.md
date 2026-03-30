@@ -1,70 +1,94 @@
-# Getting Started with Create React App
+# Locality.io
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Locality.io is a map-based web application designed to help users explore, discover, and contribute information about places across different cities. The platform allows users to view locations on an interactive map, add new places, and provide ratings.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Tech Stack
 
-### `npm start`
+Frontend:
+- React.js for UI development
+- Leaflet for interactive maps
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Backend:
+- Node.js runtime
+- Express.js for API development
+- MongoDB for data storage
+- Mongoose for database modeling
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Project Structure
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+locality-io/
+├── client/        # Frontend (React application)
+├── server/        # Backend (Node + Express API)
+│   └── server.js
+└── README.md
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Setup Instructions
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 1. Clone Repository
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+git clone https://github.com/prateekkumarsrivastava-cmd/locality.io
+cd locality-io
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 2. Backend Setup
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+cd server  
+npm install  
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Start the server:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+node server.js  
 
-## Learn More
+Backend runs on:  
+http://localhost:5000
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 3. Frontend Setup
 
-### Code Splitting
+cd client  
+npm install  
+npm run dev  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Frontend runs on:  
+http://localhost:3000
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Database Configuration
 
-### Making a Progressive Web App
+The application uses MongoDB as the database.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Default local connection string:
+mongodb://127.0.0.1:27017/locality
 
-### Advanced Configuration
+Ensure MongoDB is installed and running before starting the backend.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## API Endpoints
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+POST /add-place  
+Creates a new place entry in the database.
 
-### `npm run build` fails to minify
+GET /places  
+Fetches all stored places, sorted by latest entries.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+POST /reviews  
+Updates the rating of a specific place.
+
+---
+
+## Functionality Overview
+
+- Users can explore places on a map interface.
+- New places can be added through the backend API.
+- Each place includes details such as name, type, location, and description.
+- A basic rating system is implemented for user feedback.
