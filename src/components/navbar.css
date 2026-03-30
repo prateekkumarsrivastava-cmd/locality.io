@@ -1,0 +1,60 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: rgb(14, 30, 205);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.logo {
+  color: #020210;
+  gap: 1px;
+  align-self: baseline;
+}
+
+.nav-center {
+  display: flex;
+  gap: 15px;
+}
+
+.search {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  width: 250px;
+}
+
+.nav-right {
+  display: flex;
+  gap: 10px;
+}
+
+.primary-btn {
+  background: #1095ad;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+}
+
+.secondary-btn {
+  background: #f1f5f9;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+}
+
+.login-btn {
+  background: black;
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.logout-btn {
+  background: #ef4444;
+  color: white;
+  border-radius: 8px;
+  padding: 6px;
+}
