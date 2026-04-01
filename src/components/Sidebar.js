@@ -1,6 +1,7 @@
 // src/components/Sidebar.js
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Sidebar = ({ places, filter, setFilter, onSelectPlace, onOpenFeedback }) => {
 
@@ -18,6 +19,7 @@ const Sidebar = ({ places, filter, setFilter, onSelectPlace, onOpenFeedback }) =
 
   // visible places only
   const visiblePlaces = places.filter(p => !hiddenIds.includes(p.id));
+  const navigate = useNavigate();
 
   return (
     <div className="sidebar">
@@ -94,7 +96,7 @@ const Sidebar = ({ places, filter, setFilter, onSelectPlace, onOpenFeedback }) =
                 className="rating-btn"
                 onClick={(e) => {
                   e.stopPropagation();
-                  onOpenFeedback(place);
+                  navigate(`/reviews/${place._id}`);
                 }}
               >
                 ⭐ {place.rating}
