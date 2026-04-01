@@ -14,8 +14,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/locality')
 .then(() => console.log("MongoDB Connected"))
 .catch(err => console.log(err));
 
-/* ================= SCHEMA ================= */
+/* ================= SCHEMAS ================= */
 
+// PLACE
 const placeSchema = new mongoose.Schema({
   name: String,
   type: String,
@@ -28,15 +29,25 @@ const placeSchema = new mongoose.Schema({
     default: 4.0
   },
   description: String
-}, {
-  timestamps: true   // important for sorting/new listings
-});
+}, { timestamps: true });
 
 const Place = mongoose.model('Place', placeSchema);
 
+// ✅ NEW: REVIEW SCHEMA
+const reviewSchema = new mongoose.Schema({
+  placeId: mongoose.Schema.Types.ObjectId,
+  placeName: String,
+  user: String,
+  rating: Number,
+  text: String,
+  votes: { type: Number, default: 0 }
+}, { timestamps: true });
+
+const Review = mongoose.model('Review', reviewSchema);
+
 /* ================= ROUTES ================= */
 
-/* ADD PLACE (USER GENERATED) */
+// ADD PLACE
 app.post('/add-place', async (req, res) => {
   try {
     const newPlace = new Place(req.body);
@@ -47,7 +58,7 @@ app.post('/add-place', async (req, res) => {
   }
 });
 
-/* GET ALL PLACES */
+// GET PLACES
 app.get('/places', async (req, res) => {
   try {
     const places = await Place.find().sort({ createdAt: -1 });
@@ -57,24 +68,50 @@ app.get('/places', async (req, res) => {
   }
 });
 
-/* ADD REVIEW (OPTIONAL EXTENSION) */
+// ✅ ADD REVIEW
 app.post('/reviews', async (req, res) => {
   try {
-    const { placeId, rating } = req.body;
+    const review = new Review(req.body);
+    await review.save();
 
-    // simple average update logic
-    const place = await Place.findById(placeId);
+    // update place rating
+    const reviews = await Review.find({ placeId: review.placeId });
 
-    if (!place) return res.status(404).send("Place not found");
+    const avg =
+      reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length;
 
-    place.rating = (place.rating + rating) / 2;
+    await Place.findByIdAndUpdate(review.placeId, { rating: avg });
 
-    await place.save();
-
-    res.send(place);
+    res.json(review);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+});
+
+// ✅ GET REVIEWS BY PLACE
+app.get('/reviews/:placeId', async (req, res) => {
+  try {
+    const reviews = await Review.find({
+      placeId: req.params.placeId
+    }).sort({ createdAt: -1 });
+
+    res.json(reviews);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ✅ VOTE
+app.post('/reviews/vote', async (req, res) => {
+  const { id, type } = req.body;
+
+  const review = await Review.findById(id);
+
+  review.votes += type === "up" ? 1 : -1;
+
+  await review.save();
+
+  res.json(review);
 });
 
 /* ================= SERVER ================= */
