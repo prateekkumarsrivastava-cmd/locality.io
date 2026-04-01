@@ -14,6 +14,7 @@ import AddBusiness from './components/AddBusiness';
 import FeedbackModal from './components/FeedbackModal';
 import { initialData } from './data';
 import { getNearbyPlaces } from './utils';
+import ReviewsPage from './components/FeedbackModal';
 
 import {
   BrowserRouter,
@@ -116,7 +117,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/planner-result" element={<PlannerResult />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/add-business" element={<AddBusiness />} />  {/* ✅ FIXED */}
+        <Route path="/add-business" element={<AddBusiness />} /> 
+        <Route path="/reviews/:placeName" element={<FeedbackModal />} />
 
       </Routes>
 
